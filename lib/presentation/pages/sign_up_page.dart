@@ -28,6 +28,7 @@ class SignUpPage extends StatelessWidget {
         throw (Error);
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Color(0xffd4e1f4),
         body: SafeArea(
             child: Center(
@@ -83,15 +84,6 @@ class SignUpPage extends StatelessWidget {
                     try {
                       AuthServices.signUp(fullNameController.text,
                           emailController.text, passwordController.text);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => BlocProvider(
-                                  create: (context) =>
-                                      MovieBloc()..add(FetchMovies()),
-                                  child: MainPage(),
-                                )),
-                      );
                     } on FirebaseAuthException catch (e) {
                       _handleSignUpError(e, context);
                     }

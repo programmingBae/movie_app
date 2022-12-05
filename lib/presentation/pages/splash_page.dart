@@ -20,6 +20,7 @@ class SplashPage extends StatelessWidget {
       backgroundColor: Color(0xffd4e1f4),
       body: SafeArea(
         child: Center(
+          heightFactor: double.infinity,
           child: Column(
             children: [
               SizedBox(
@@ -72,7 +73,7 @@ class SplashPage extends StatelessWidget {
                           //   MaterialPageRoute(
                           //       builder: (context) => SignInPage()),
                           // );
-                          context.read()<PageBloc>().add(OpenSignInPage());
+                          context.read<PageBloc>().add(OpenSignInPage());
                         },
                       style: GoogleFonts.poppins(
                           fontSize: 16,

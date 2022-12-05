@@ -15,15 +15,20 @@ class Wrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<PageBloc>().add(OpenSplashPage());
-    User? firebaseUser = Provider.of<User?>(context, listen: false);
+    User? firebaseUser = Provider.of<User?>(context);
+
+    if (firebaseUser == null) {
+      context.read<PageBloc>().add(OpenSplashPage());
+    } else {
+      context.read<PageBloc>().add(OpenMainPage());
+    }
 
     return BlocBuilder<PageBloc, PageState>(
         builder: (context, state) => (state is OnSplashPage)
             ? SplashPage()
             : (state is OnSignUpPage)
                 ? SignUpPage()
-                : (state is OnSignUpPage)
+                : (state is OnSignInPage)
                     ? SignInPage()
                     : (state is OnMainPage)
                         ? MainPage()

@@ -23,13 +23,16 @@ class MovieList extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: 10,
                     itemBuilder: (_, index) {
-                      return Row(
-                        children: <Widget>[
-                          MovieCard(movie: movies[index]),
-                          SizedBox(
-                            width: 20,
-                          )
-                        ],
+                      return InkWell(
+                        onTap: () {},
+                        child: Row(
+                          children: <Widget>[
+                            MovieCard(movie: movies[index]),
+                            SizedBox(
+                              width: 20,
+                            )
+                          ],
+                        ),
                       );
                     }));
           } else if (state is MovieInitial) {
