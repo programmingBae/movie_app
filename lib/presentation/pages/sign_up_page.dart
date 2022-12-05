@@ -10,6 +10,7 @@ import 'package:movie_app/presentation/widgets/text_input.dart';
 import 'package:movie_app/repository/auth_services.dart';
 
 import '../../bloc/bloc/movie_bloc.dart';
+import '../../bloc/bloc/page_bloc.dart';
 
 class SignUpPage extends StatelessWidget {
   SignUpPage({super.key});
@@ -21,79 +22,85 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffd4e1f4),
-      body: SafeArea(
-          child: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 60,
-            ),
-            Text(
-              "Create New Account",
-              style: GoogleFonts.poppins(
-                  fontSize: 26,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xff000000)),
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            TextInput(
-              isPassword: false,
-              text: "Full Name",
-              controller: fullNameController,
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            TextInput(
-              isPassword: false,
-              text: "Email",
-              controller: emailController,
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            TextInput(
-              isPassword: true,
-              text: "Password",
-              controller: passwordController,
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            TextInput(
-              isPassword: true,
-              text: "Confirm Password",
-              controller: confirmPasswordController,
-            ),
-            SizedBox(
-              height: 45,
-            ),
-            BlackButton(
-                onPressed: () {
-                  try {
-                    AuthServices.signUp(fullNameController.text,
-                        emailController.text, passwordController.text);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => BlocProvider(
-                                create: (context) =>
-                                    MovieBloc()..add(FetchMovies()),
-                                child: MainPage(),
-                              )),
-                    );
-                  } on FirebaseAuthException catch (e) {
-                    _handleSignUpError(e, context);
-                  }
-                },
-                text: "Sign Up")
-          ],
-        ),
-      )),
+    return WillPopScope(
+      onWillPop: () {
+        context.read<PageBloc>().add(OpenSplashPage());
+        throw (Error);
+      },
+      child: Scaffold(
+        backgroundColor: Color(0xffd4e1f4),
+        body: SafeArea(
+            child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 60,
+              ),
+              Text(
+                "Create New Account",
+                style: GoogleFonts.poppins(
+                    fontSize: 26,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xff000000)),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              TextInput(
+                isPassword: false,
+                text: "Full Name",
+                controller: fullNameController,
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              TextInput(
+                isPassword: false,
+                text: "Email",
+                controller: emailController,
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              TextInput(
+                isPassword: true,
+                text: "Password",
+                controller: passwordController,
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              TextInput(
+                isPassword: true,
+                text: "Confirm Password",
+                controller: confirmPasswordController,
+              ),
+              SizedBox(
+                height: 45,
+              ),
+              BlackButton(
+                  onPressed: () {
+                    try {
+                      AuthServices.signUp(fullNameController.text,
+                          emailController.text, passwordController.text);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BlocProvider(
+                                  create: (context) =>
+                                      MovieBloc()..add(FetchMovies()),
+                                  child: MainPage(),
+                                )),
+                      );
+                    } on FirebaseAuthException catch (e) {
+                      _handleSignUpError(e, context);
+                    }
+                  },
+                  text: "Sign Up")
+            ],
+          ),
+        )),
+      ),
     );
   }
 

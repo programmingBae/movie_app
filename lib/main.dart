@@ -8,7 +8,12 @@ import 'package:movie_app/presentation/pages/main_page.dart';
 import 'package:movie_app/presentation/pages/sign_in_page.dart';
 import 'package:movie_app/presentation/pages/sign_up_page.dart';
 import 'package:movie_app/presentation/pages/splash_page.dart';
+import 'package:movie_app/presentation/pages/wrapper.dart';
+import 'package:movie_app/repository/auth_services.dart';
 import 'package:movie_app/services/database_services.dart';
+import 'package:provider/provider.dart';
+
+import 'bloc/bloc/page_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,9 +26,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SplashPage(),
+    return StreamProvider.value(
+      value: AuthServices.userStream,
+
+      initialData: null,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => PageBloc()),
+          BlocProvider(create: (_) => MovieBloc()..add(FetchMovies())),
+        ],
+        child: MaterialApp(
+          home: Wrapper(),
+          debugShowCheckedModeBanner: false,
+        ),
+      ),
 
       // home: Scaffold(
       //   appBar: AppBar(

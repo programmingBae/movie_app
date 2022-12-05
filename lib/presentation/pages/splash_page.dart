@@ -3,10 +3,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_app/presentation/pages/sign_in_page.dart';
 import 'package:movie_app/presentation/pages/sign_up_page.dart';
 
+import '../../bloc/bloc/page_bloc.dart';
 import '../widgets/black_button.dart';
 
 class SplashPage extends StatelessWidget {
@@ -47,10 +49,11 @@ class SplashPage extends StatelessWidget {
               ),
               BlackButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SignUpPage()),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => SignUpPage()),
+                  // );
+                  context.read<PageBloc>().add(OpenSignUpPage());
                 },
                 text: "Get Started",
               ),
@@ -64,11 +67,12 @@ class SplashPage extends StatelessWidget {
                       text: "Sign In",
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SignInPage()),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //       builder: (context) => SignInPage()),
+                          // );
+                          context.read()<PageBloc>().add(OpenSignInPage());
                         },
                       style: GoogleFonts.poppins(
                           fontSize: 16,

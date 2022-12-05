@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_app/bloc/bloc/movie_bloc.dart';
 import 'package:movie_app/presentation/widgets/black_button.dart';
+import 'package:movie_app/presentation/widgets/genre_button.dart';
 import 'package:movie_app/presentation/widgets/movie_card.dart';
 import 'package:movie_app/presentation/widgets/movie_list.dart';
 
@@ -138,31 +139,7 @@ class MainPage extends StatelessWidget {
                           itemBuilder: (_, index) {
                             return Row(
                               children: <Widget>[
-                                Container(
-                                  height: 35,
-                                  width: 100,
-                                  child: ElevatedButton(
-                                      onPressed: () {},
-                                      child: Text(
-                                        "test",
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      style: ButtonStyle(
-                                          shape: MaterialStateProperty.all<
-                                                  RoundedRectangleBorder>(
-                                              RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(18.0),
-                                            // side: BorderSide(color: Colors.red)
-                                          )),
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                            Color(0xff2c3e50),
-                                          ))),
-                                ),
+                                GenreButton(),
                                 SizedBox(
                                   width: 20,
                                 )
