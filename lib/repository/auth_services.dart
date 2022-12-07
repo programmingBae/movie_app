@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:movie_app/services/database_services.dart';
+import 'package:movie_app/repository/database_services.dart';
 
 class AuthServices {
   static FirebaseAuth _auth = FirebaseAuth.instance;
@@ -8,8 +8,11 @@ class AuthServices {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      await DatabaseServices.createUser(
-          fullName: fullName, email: email, password: password);
+      await DatabaseServices.updateUser(
+          fullName: fullName,
+          email: email,
+          password: password,
+          uid: result.user!.uid);
 
       User? user = result.user;
       return user;

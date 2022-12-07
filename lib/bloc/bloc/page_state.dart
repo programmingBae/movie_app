@@ -32,3 +32,9 @@ class OnMainPage extends PageState {
   // TODO: implement props
   List<Object?> get props => [];
 }
+
+class OnTopUpPage extends PageState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}

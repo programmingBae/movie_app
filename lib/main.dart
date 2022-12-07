@@ -10,10 +10,11 @@ import 'package:movie_app/presentation/pages/sign_up_page.dart';
 import 'package:movie_app/presentation/pages/splash_page.dart';
 import 'package:movie_app/presentation/pages/wrapper.dart';
 import 'package:movie_app/repository/auth_services.dart';
-import 'package:movie_app/services/database_services.dart';
+import 'package:movie_app/repository/database_services.dart';
 import 'package:provider/provider.dart';
 
 import 'bloc/bloc/page_bloc.dart';
+import 'bloc/bloc/user_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (_) => PageBloc()),
+          BlocProvider(create: (_) => UserBloc()),
           BlocProvider(create: (_) => MovieBloc()..add(FetchMovies())),
         ],
         child: MaterialApp(

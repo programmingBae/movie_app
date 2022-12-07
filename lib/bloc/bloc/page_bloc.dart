@@ -26,6 +26,8 @@ class PageBloc extends Bloc<PageEvent, PageState> {
       emit(OnSignUpPage());
     } else if (event is OpenMainPage) {
       emit(OnMainPage());
+    } else if (event is OpenTopUpPage) {
+      emit(OnTopUpPage());
     }
   }
 }

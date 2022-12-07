@@ -27,3 +27,9 @@ class OpenMainPage extends PageEvent {
   // TODO: implement props
   List<Object?> get props => [];
 }
+
+class OpenTopUpPage extends PageEvent {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
