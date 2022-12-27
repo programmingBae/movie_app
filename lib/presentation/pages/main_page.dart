@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_app/bloc/bloc/movie_bloc.dart';
 import 'package:movie_app/bloc/bloc/user_bloc.dart';
+import 'package:movie_app/presentation/pages/movie_page.dart';
+import 'package:movie_app/presentation/pages/ticket_page.dart';
 import 'package:movie_app/presentation/widgets/black_button.dart';
 import 'package:movie_app/presentation/widgets/genre_button.dart';
 import 'package:movie_app/presentation/widgets/movie_card.dart';
@@ -14,167 +16,145 @@ import 'package:movie_app/presentation/widgets/movie_list.dart';
 import '../../bloc/bloc/page_bloc.dart';
 import '../../entities/movie.dart';
 
-class MainPage extends StatelessWidget {
-  const MainPage({super.key});
+class MainPage extends StatefulWidget {
+  final int bottomNavBarIndex;
+  final bool isExpired;
+  const MainPage({this.bottomNavBarIndex = 0, this.isExpired = false});
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  late int bottomNavBarIndex;
+  late PageController pageController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    bottomNavBarIndex = widget.bottomNavBarIndex;
+    pageController = PageController(initialPage: bottomNavBarIndex);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        // bottomNavigationBar: createCustomBottomNavBar(),
         backgroundColor: Color(0xffd4e1f4),
-        body: BlocBuilder<UserBloc, UserState>(
-          builder: (context, state) {
-            if (state is UserLoaded) {
-              return SafeArea(
-                child: Container(
-                  height: double.infinity,
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 75,
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
-                        child: Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Welcome!" + state.user.fullName,
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xff2c3e50)),
-                                ),
-                                Text(
-                                  state.user.walletAmount,
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                      color: Color(0xff2c3e50)),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 123),
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Color(0xff2c3e50))),
-                                onPressed: () {
-                                  context.read<PageBloc>().add(OpenTopUpPage());
-                                },
-                                child: Text("Top Up"),
-                              ),
-                              // child: Text(
-                              //   "IDR!",
-                              //   style: GoogleFonts.poppins(
-                              //       fontSize: 16,
-                              //       fontWeight: FontWeight.w700,
-                              //       color: Color(0xff2c3e50)),
-                              // ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: Color(0xff2F3943),
-                        ),
-                        width: 280,
-                        height: 35,
-                        child: TextField(
-                          decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(
-                                bottom: 10,
-                              ),
-                              prefixIcon: Icon(Icons.search),
-                              hintText: "Search",
-                              border: InputBorder.none,
-                              hintStyle: GoogleFonts.poppins(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                  color: Color(0xff5F666C))),
-                          // controller: controller,
-                          style: GoogleFonts.poppins(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xffacaeaf)),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Category",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w900,
-                                  color: Color(0xff2c3e50)),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 116),
-                              child: RichText(
-                                  text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "See All>",
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {},
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                        color: Color(0xff2c3e50)),
-                                  )
-                                ],
-                              )),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
-                        height: 100,
-                        child: Expanded(
-                            child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: 5,
-                                itemBuilder: (_, index) {
-                                  return Row(
-                                    children: <Widget>[
-                                      GenreButton(),
-                                      SizedBox(
-                                        width: 20,
-                                      )
-                                    ],
-                                  );
-                                })),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      MovieList()
-                    ],
-                  ),
-                ),
-              );
-            } else {
-              return Container();
-            }
-          },
+        body: Stack(
+          children: [
+            BlocBuilder<UserBloc, UserState>(
+              builder: (context, state) {
+                if (state is UserLoaded) {
+                  return SafeArea(
+                    child: Container(
+                      child: PageView(
+                          controller: pageController,
+                          onPageChanged: (index) {
+                            setState(() {
+                              bottomNavBarIndex = index;
+                            });
+                          },
+                          children: [MoviePage(), Container(), TicketPage()]),
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
+            createCustomBottomNavBar(),
+          ],
         ));
   }
+
+  Widget createCustomBottomNavBar() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: ClipPath(
+        child: Container(
+          height: 60,
+          decoration: BoxDecoration(
+            color: Color(0xff2c3e50),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+          ),
+          child: BottomNavigationBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            selectedItemColor: Color(0xFF503E9D),
+            unselectedItemColor: Color(0xFFE5E5E5),
+            currentIndex: bottomNavBarIndex,
+            onTap: (index) {
+              setState(() {
+                bottomNavBarIndex = index;
+                pageController.jumpToPage(index);
+              });
+            },
+            items: [
+              BottomNavigationBarItem(
+                label: "New Movies",
+                icon: Container(
+                  margin: EdgeInsets.only(bottom: 6),
+                  height: 20,
+                  // child: Image.asset(
+                  //   (bottomNavBarIndex == 0)
+                  //       ? "assets/ic_movies.png"
+                  //       : "assets/ic_movies_grey.png",
+                  // ),
+                ),
+              ),
+              BottomNavigationBarItem(
+                label: "Profile",
+                icon: Container(
+                  margin: EdgeInsets.only(bottom: 6),
+                  height: 20,
+                  // child: Image.asset(
+                  //   (bottomNavBarIndex == 0)
+                  //       ? "assets/ic_movies.png"
+                  //       : "assets/ic_movies_grey.png",
+                  // ),
+                ),
+              ),
+              BottomNavigationBarItem(
+                label: "My Tickets",
+                icon: Container(
+                  margin: EdgeInsets.only(bottom: 6),
+                  height: 20,
+                  // child: Image.asset(
+                  //   (bottomNavBarIndex == 1)
+                  //       ? "assets/ic_tickets.png"
+                  //       : "assets/ic_tickets_grey.png",
+                  // ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
+
+// class BottomNavBarClipper extends CustomClipper<Path> {
+//   @override
+//   Path getClip(Size size) {
+//     Path path = Path();
+
+//     path.lineTo(size.width / 2 - 28, 0);
+//     path.quadraticBezierTo(size.width / 2 - 28, 33, size.width / 2, 33);
+//     path.quadraticBezierTo(size.width / 2 + 28, 33, size.width / 2 + 28, 0);
+//     path.lineTo(size.width, 0);
+//     path.lineTo(size.width, size.height);
+//     path.lineTo(0, size.height);
+//     path.close();
+
+//     return path;
+//   }
+
+//   @override
+//   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+// }

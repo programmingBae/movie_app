@@ -20,6 +20,7 @@ class UserRepository {
       'email': user.email,
       'fullName': user.fullName,
       'walletAmount': user.walletAmount,
+      'password': user.password,
     });
   }
 

@@ -1,5 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:movie_app/entities/ticket.dart';
+
+import '../../entities/movie.dart';
 
 part 'page_event.dart';
 part 'page_state.dart';
@@ -25,9 +28,21 @@ class PageBloc extends Bloc<PageEvent, PageState> {
     } else if (event is OpenSignUpPage) {
       emit(OnSignUpPage());
     } else if (event is OpenMainPage) {
-      emit(OnMainPage());
+      emit(OnMainPage(
+          bottomNavBarIndex: event.bottomNavBarIndex,
+          isExpired: event.isExpired));
     } else if (event is OpenTopUpPage) {
       emit(OnTopUpPage());
+    } else if (event is OpenMovieDetailPage) {
+      emit(OnMovieDetailPage(event.movie));
+    } else if (event is OpenBookSchedulePage) {
+      emit(OnBookSchedulePage(event.movie));
+    } else if (event is OpenSelectSeatPage) {
+      emit(OnSelectSeatPage(event.ticket));
+    } else if (event is OpenCheckoutPage) {
+      emit(OnCheckoutPage(event.ticket));
+    } else if (event is OpenTicketDetailPage) {
+      emit(OnTicketDetailPage(event.ticket));
     }
   }
 }

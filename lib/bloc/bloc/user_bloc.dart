@@ -43,6 +43,23 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           print(e);
         }
       }
+    } else if (event is BuyTicketByUser) {
+      if (state is UserLoaded) {
+        try {
+          User updatedUser = (state as UserLoaded).user.copyWith(
+                walletAmount:
+                    (double.parse((state as UserLoaded).user.walletAmount) -
+                            event.amount!.toDouble())
+                        .toString(),
+              );
+
+          await UserRepository.updateUser(updatedUser);
+
+          emit(UserLoaded(updatedUser));
+        } catch (e) {
+          print(e);
+        }
+      }
     }
   }
 }

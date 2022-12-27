@@ -16,7 +16,7 @@ class Movie with _$Movie {
       required bool adult,
       required String overview,
       @JsonKey(name: "release_date") required String releaseDate,
-      @JsonKey(name: "genre_ids") required List<int> genreIds,
+      // @JsonKey(name: "genre_ids") required List<int> genreIds,
       required int id,
       @JsonKey(name: "original_title") required String originalTitle,
       @JsonKey(name: "original_language") required String originalLanguage,

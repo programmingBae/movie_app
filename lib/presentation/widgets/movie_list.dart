@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/bloc/movie_bloc.dart';
+import '../../bloc/bloc/page_bloc.dart';
 import '../../entities/movie.dart';
 import 'movie_card.dart';
 
@@ -23,15 +24,25 @@ class MovieList extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: 10,
                     itemBuilder: (_, index) {
-                      return InkWell(
-                        onTap: () {},
-                        child: Row(
-                          children: <Widget>[
-                            MovieCard(movie: movies[index]),
-                            SizedBox(
-                              width: 20,
-                            )
-                          ],
+                      return Container(
+                        margin: EdgeInsets.only(
+                          left: (index == 0) ? 24 : 0,
+                          right: (index == movies.length - 1) ? 24 : 16,
+                        ),
+                        child: InkWell(
+                          onTap: () {
+                            context
+                                .read<PageBloc>()
+                                .add(OpenMovieDetailPage(movies[index]));
+                          },
+                          child: Row(
+                            children: <Widget>[
+                              MovieCard(movie: movies[index]),
+                              SizedBox(
+                                width: 15,
+                              )
+                            ],
+                          ),
                         ),
                       );
                     }));

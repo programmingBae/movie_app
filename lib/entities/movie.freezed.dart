@@ -25,9 +25,8 @@ mixin _$Movie {
   bool get adult => throw _privateConstructorUsedError;
   String get overview => throw _privateConstructorUsedError;
   @JsonKey(name: "release_date")
-  String get releaseDate => throw _privateConstructorUsedError;
-  @JsonKey(name: "genre_ids")
-  List<int> get genreIds => throw _privateConstructorUsedError;
+  String get releaseDate =>
+      throw _privateConstructorUsedError; // @JsonKey(name: "genre_ids") required List<int> genreIds,
   int get id => throw _privateConstructorUsedError;
   @JsonKey(name: "original_title")
   String get originalTitle => throw _privateConstructorUsedError;
@@ -58,7 +57,6 @@ abstract class $MovieCopyWith<$Res> {
       bool adult,
       String overview,
       @JsonKey(name: "release_date") String releaseDate,
-      @JsonKey(name: "genre_ids") List<int> genreIds,
       int id,
       @JsonKey(name: "original_title") String originalTitle,
       @JsonKey(name: "original_language") String originalLanguage,
@@ -87,7 +85,6 @@ class _$MovieCopyWithImpl<$Res, $Val extends Movie>
     Object? adult = null,
     Object? overview = null,
     Object? releaseDate = null,
-    Object? genreIds = null,
     Object? id = null,
     Object? originalTitle = null,
     Object? originalLanguage = null,
@@ -115,10 +112,6 @@ class _$MovieCopyWithImpl<$Res, $Val extends Movie>
           ? _value.releaseDate
           : releaseDate // ignore: cast_nullable_to_non_nullable
               as String,
-      genreIds: null == genreIds
-          ? _value.genreIds
-          : genreIds // ignore: cast_nullable_to_non_nullable
-              as List<int>,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -170,7 +163,6 @@ abstract class _$$_MovieCopyWith<$Res> implements $MovieCopyWith<$Res> {
       bool adult,
       String overview,
       @JsonKey(name: "release_date") String releaseDate,
-      @JsonKey(name: "genre_ids") List<int> genreIds,
       int id,
       @JsonKey(name: "original_title") String originalTitle,
       @JsonKey(name: "original_language") String originalLanguage,
@@ -195,7 +187,6 @@ class __$$_MovieCopyWithImpl<$Res> extends _$MovieCopyWithImpl<$Res, _$_Movie>
     Object? adult = null,
     Object? overview = null,
     Object? releaseDate = null,
-    Object? genreIds = null,
     Object? id = null,
     Object? originalTitle = null,
     Object? originalLanguage = null,
@@ -223,10 +214,6 @@ class __$$_MovieCopyWithImpl<$Res> extends _$MovieCopyWithImpl<$Res, _$_Movie>
           ? _value.releaseDate
           : releaseDate // ignore: cast_nullable_to_non_nullable
               as String,
-      genreIds: null == genreIds
-          ? _value._genreIds
-          : genreIds // ignore: cast_nullable_to_non_nullable
-              as List<int>,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -275,7 +262,6 @@ class _$_Movie implements _Movie {
       required this.adult,
       required this.overview,
       @JsonKey(name: "release_date") required this.releaseDate,
-      @JsonKey(name: "genre_ids") required final List<int> genreIds,
       required this.id,
       @JsonKey(name: "original_title") required this.originalTitle,
       @JsonKey(name: "original_language") required this.originalLanguage,
@@ -284,8 +270,7 @@ class _$_Movie implements _Movie {
       required this.popularity,
       @JsonKey(name: "vote_count") required this.voteCount,
       required this.video,
-      @JsonKey(name: "vote_average") required this.voteAverage})
-      : _genreIds = genreIds;
+      @JsonKey(name: "vote_average") required this.voteAverage});
 
   factory _$_Movie.fromJson(Map<String, dynamic> json) =>
       _$$_MovieFromJson(json);
@@ -300,14 +285,7 @@ class _$_Movie implements _Movie {
   @override
   @JsonKey(name: "release_date")
   final String releaseDate;
-  final List<int> _genreIds;
-  @override
-  @JsonKey(name: "genre_ids")
-  List<int> get genreIds {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_genreIds);
-  }
-
+// @JsonKey(name: "genre_ids") required List<int> genreIds,
   @override
   final int id;
   @override
@@ -334,7 +312,7 @@ class _$_Movie implements _Movie {
 
   @override
   String toString() {
-    return 'Movie(posterPath: $posterPath, adult: $adult, overview: $overview, releaseDate: $releaseDate, genreIds: $genreIds, id: $id, originalTitle: $originalTitle, originalLanguage: $originalLanguage, title: $title, backdropPath: $backdropPath, popularity: $popularity, voteCount: $voteCount, video: $video, voteAverage: $voteAverage)';
+    return 'Movie(posterPath: $posterPath, adult: $adult, overview: $overview, releaseDate: $releaseDate, id: $id, originalTitle: $originalTitle, originalLanguage: $originalLanguage, title: $title, backdropPath: $backdropPath, popularity: $popularity, voteCount: $voteCount, video: $video, voteAverage: $voteAverage)';
   }
 
   @override
@@ -349,7 +327,6 @@ class _$_Movie implements _Movie {
                 other.overview == overview) &&
             (identical(other.releaseDate, releaseDate) ||
                 other.releaseDate == releaseDate) &&
-            const DeepCollectionEquality().equals(other._genreIds, _genreIds) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.originalTitle, originalTitle) ||
                 other.originalTitle == originalTitle) &&
@@ -375,7 +352,6 @@ class _$_Movie implements _Movie {
       adult,
       overview,
       releaseDate,
-      const DeepCollectionEquality().hash(_genreIds),
       id,
       originalTitle,
       originalLanguage,
@@ -408,8 +384,6 @@ abstract class _Movie implements Movie {
       required final String overview,
       @JsonKey(name: "release_date")
           required final String releaseDate,
-      @JsonKey(name: "genre_ids")
-          required final List<int> genreIds,
       required final int id,
       @JsonKey(name: "original_title")
           required final String originalTitle,
@@ -437,10 +411,7 @@ abstract class _Movie implements Movie {
   @override
   @JsonKey(name: "release_date")
   String get releaseDate;
-  @override
-  @JsonKey(name: "genre_ids")
-  List<int> get genreIds;
-  @override
+  @override // @JsonKey(name: "genre_ids") required List<int> genreIds,
   int get id;
   @override
   @JsonKey(name: "original_title")

@@ -21,3 +21,12 @@ class TopUp extends UserEvent {
   @override
   List<Object> get props => [amount];
 }
+
+class BuyTicketByUser extends UserEvent {
+  final int? amount;
+
+  BuyTicketByUser(this.amount);
+
+  @override
+  List<Object?> get props => [amount];
+}
